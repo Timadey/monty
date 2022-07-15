@@ -19,19 +19,21 @@ void check_malloc(void *mem)
 char **tokenize_line(char *ln)
 {
 	char *line = ln;
-	char **tokens;
+	extern char **tokens;
 	char *token;
 	unsigned int token_size = TOK_SIZE;
 	unsigned int index = 0;
 
 	if (line == NULL)
 		return (NULL);
-	tokens = malloc(token_size * sizeof(char *));
-	check_malloc(tokens);
-	printf("here");
+	if (tokens == NULL)
+	{
+		tokens = malloc(token_size * sizeof(char *));
+		check_malloc(tokens);
+	}
 
 	token = strtok(line, TOK_DELIM);
-	while (token != NULL)
+	while (index < token_size)
 	{
 		tokens[index] = token;
 		token = strtok(NULL, TOK_DELIM);
@@ -39,4 +41,44 @@ char **tokenize_line(char *ln)
 	}
 	tokens[index] = token;
 	return (tokens);
+}
+/**
+ * is_int - check if the string passed is an integer
+ * @str: the string to check
+ * Return: 1 if true 0 if false
+ */
+int is_int(char *str)
+{
+	int dig;
+
+	if (str == NULL)
+		return (0);
+	if (*str == '-')
+		str++;
+	dig = *str;
+	while (dig != '\0')
+	{
+		if (!isdigit(dig))
+			return (0);
+		dig = *(str++);
+	}
+	return (1);
+}
+/**
+ * free_stack - free a stack_t stack
+ * Return: void
+ */
+void free_stack()
+{
+	extern stack_t *top;
+	stack_t *prev;
+
+	if (top == NULL)
+		return;
+	while (top != NULL)
+	{
+		prev = top;
+		top = top->prev;
+		free(prev);
+	}
 }

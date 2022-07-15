@@ -1,22 +1,23 @@
 #include "monty.h"
 /**
- * get_instruction - return the function of the opcode
+ * get_op_func - return the function of the opcode
  * @command: the opcode
  * Return: pointer to the function
  */
-void *(get_intsruction(char *opcode))(stack_t **stack, unsigned int line_number)
+void (*get_op_func(char *opcode))(stack_t **stack, unsigned int line_number)
 {
-	instruction_t *instruction = {
+	instruction_t instruction[] = {
 		{"push", push},
 		{"pall", pall},
 		{NULL, NULL}
 	};
+	int i = 0;
 	
-	while (intructions != NULL)
+	while (instruction[i].opcode != NULL)
 	{
-		if (strcmp(instruction->opcode, opcode) == 1)
-			return (instruction->f);
+		if (strcmp(instruction[i].opcode, opcode) == 0)
+			return (instruction[i].f);
+		i++;
 	}
 	return (NULL);
 }
-

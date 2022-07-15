@@ -1,6 +1,6 @@
 #ifndef _MONTY_H_
 #define _MONTY_H_
-#define TOK_SIZE 512
+#define TOK_SIZE 2
 #define TOK_DELIM " \n\t\r\v\f"
 /**
  * Standard libraries
@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -37,12 +38,27 @@ typedef struct instruction_s
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 /**
+ * destruct.c
+ */
+void destructor() __attribute__((destructor));
+/**
  * helper functions defined in helpers.c
  */
 void check_malloc(void *mem);
 char **tokenize_line(char *ln);
+int is_int(char *str);
+void free_stack();
+/**
+ * instruction.c
+ */
+void push(stack_t **stack, unsigned int line_number);
+void pall(stack_t **stack, unsigned int line_number);
 /**
  * get_instruction.c
  */
-void *(get_intsruction(char *opcode))(stack_t **stack, unsigned int line_number);
+void (*get_op_func(char *opcode))(stack_t **stack, unsigned int line_number);
+/**
+ * run_monty.c
+ */
+void run_monty(char **tokens);
 #endif
