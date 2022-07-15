@@ -1,4 +1,5 @@
 #include "monty.h"
+FILE *file;
 stack_t *top = NULL;
 char **tokens = NULL;
 char *line = NULL;
@@ -12,10 +13,9 @@ unsigned int line_number = 0;
  */
 int main(int argc, char **argv)
 {
-	FILE *file;
 	size_t len = 0;
 	ssize_t nread;
-	
+
 	if (argc != 2)
 	{
 		fprintf(stderr, "USAGE: monty file\n");
@@ -28,27 +28,30 @@ int main(int argc, char **argv)
 		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
+	tokens = malloc(TOK_SIZE * sizeof(char *));
+	check_malloc(tokens);
 
 	while ((nread = getline(&line, &len, file)) != -1)
 	{
 		printf("line %d: %s\n", line_number, line);
 		if (line == NULL)
-			return (0);
-		token = tokenize_line(line);
+		{
+			fail_exit(0);
+		}
+		tokens = tokenize_line(line);
 		if (tokens == NULL)
 			return (0);
 		run_monty(tokens);
 		/**
-		for (i = 0; i < 3; i++)
-		{
-			printf("	command: %s\n", tokens[i]);
-		}
-		*/
+		  for (i = 0; i < 3; i++)
+		  {
+		  printf("	command: %s\n", tokens[i]);
+		  }
+		  */
 
 		line_number++;
 	}
-	
-	fclose(file);
 
+	fclose(file);
 	return (0);
 }

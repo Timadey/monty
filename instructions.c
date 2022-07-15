@@ -18,7 +18,7 @@ void push(stack_t **stack, unsigned int line_number)
 	if (arg == NULL || !is_int(arg))
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
-		exit(EXIT_FAILURE);
+		fail_exit(EXIT_FAILURE);
 	}
 	data = atoi(arg);
 
@@ -56,4 +56,21 @@ void pall(stack_t **stack, unsigned int line_number)
 		printf("%d\n", current->n);
 		current = current->prev;
 	}
+}
+/**
+ * pint - print teh value at the top of the stack followed by a new line
+ * @stack: top of the stack
+ * @line_number: current line number of the monty file
+ * Return: void
+ */
+void pint(stack_t **stack, unsigned int line_number)
+{
+	stack_t *top = *stack;
+
+	if (top == NULL)
+	{
+		fprintf(stderr, "L%d: can't pint, stack empty", line_number);
+		fail_exit(EXIT_FAILURE);
+	}
+	printf("%d\n", top->n);
 }

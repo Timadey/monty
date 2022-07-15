@@ -9,7 +9,7 @@ void check_malloc(void *mem)
 	if (mem == NULL)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
-		exit(EXIT_FAILURE);
+		fail_exit(EXIT_FAILURE);
 	}
 }
 /**
@@ -26,12 +26,6 @@ char **tokenize_line(char *ln)
 
 	if (line == NULL)
 		return (NULL);
-	if (tokens == NULL)
-	{
-		tokens = malloc(token_size * sizeof(char *));
-		check_malloc(tokens);
-	}
-
 	token = strtok(line, TOK_DELIM);
 	while (index < token_size)
 	{
@@ -39,7 +33,6 @@ char **tokenize_line(char *ln)
 		token = strtok(NULL, TOK_DELIM);
 		index++;
 	}
-	tokens[index] = token;
 	return (tokens);
 }
 /**
