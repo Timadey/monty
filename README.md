@@ -1,6 +1,6 @@
 # Monty
 
-`monty` is an interpreter of Monty ByteCodes files, which is a scripting language just like Python.
+`monty` is an interpreter for Monty ByteCodes files, which is a scripting language just like Python.
 
 ## About the Monty language
 This is a language that contains specific instructions to manipulate data information (stacks or queues). Each instruction (*called opcode*) are called `opcodes` and are sent once per line in the file containing the `bytecodes`. This files have extension .m, this is not neccessary as it is just a naming convention.
